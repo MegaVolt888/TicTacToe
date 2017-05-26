@@ -192,7 +192,7 @@ class TicTacToe {
     }
 
     double moveWeigth(int a, int b, char moveChar) {
-        double moveWeigth = 0.00, curWeigth = 0.0;
+        double moveWeigth, curWeigth = 0.0;
         int n;
         int t_x, t_y;
 
@@ -204,35 +204,25 @@ class TicTacToe {
             t_x = a;
             t_y = b;
 
-            n = 0;
-            moveWeigth = 0;
+            n = 1;
+            moveWeigth = 0.0;
 
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-                if (t_x == a && t_y == b) {
-                    moveWeigth += 100;
-                    t_x += vector[i][0];
-                    t_y += vector[i][1];
-                    continue;
-                }
-                if (board[t_y][t_x] != moveChar) break;
+                if (t_x != a || t_y != b)
+                    if (board[t_y][t_x] != moveChar ) break;
+                else ++n ;
                 moveWeigth += 100;
-                ++n;
                 t_x += vector[i][0];
                 t_y += vector[i][1];
             }
 
             t_x = a;
             t_y = b;
-
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-                if (t_x == a && t_y == b) {
-                    t_x -= vector[i][0];
-                    t_y -= vector[i][1];
-                    continue;
-                }
-                if (board[t_y][t_x] != moveChar) break;
+                if (t_x != a || t_y != b)
+                    if (board[t_y][t_x] != moveChar ) break;
+                    else ++n ;
                 moveWeigth += 100;
-                ++n;
                 t_x -= vector[i][0];
                 t_y -= vector[i][1];
             }
