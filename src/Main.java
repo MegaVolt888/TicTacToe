@@ -4,8 +4,6 @@
  */
 
 import java.util.Scanner;
-import java.util.StringJoiner;
-import java.util.function.BooleanSupplier;
 
 public class Main {
 
@@ -34,6 +32,11 @@ public class Main {
 
 class TicTacToe {
 
+    final int WIN_COINT = 4;
+    final int BOARD_SIZE = 9;
+    final char USER_CHAR = 'X';
+    final char COMP_CHAR = 'O';
+    final char EMPTY_CELL_CHAR = '.';
     /**
      * We assume the board is square, so we use only one dimension.
      */
@@ -42,12 +45,6 @@ class TicTacToe {
     int userMoves, compMoves, curX, curY, cellsCount;
     char[][] board;
     boolean gameOver;
-
-    final int WIN_COINT = 4;
-    final int BOARD_SIZE = 5;
-    final char USER_CHAR = 'X';
-    final char COMP_CHAR = 'O';
-    final char EMPTY_CELL_CHAR = '.';
 
 
     public TicTacToe() {
@@ -91,14 +88,21 @@ class TicTacToe {
     }
 
     void printBoard() {
-        System.out.println(". 1 2 3 4 5 ");
+
+        System.out.print(".");
+        for (int i = 1; i <= BOARD_SIZE; ++i)
+            System.out.print(" " + i);
+        System.out.println();
         for (int i = 0; i < BOARD_SIZE; ++i) {
             System.out.print((i + 1) + " ");
             for (int j = 0; j < BOARD_SIZE; ++j)
                 System.out.print(board[i][j] + " ");
             System.out.println();
         }
-        System.out.println(". 1 2 3 4 5 ");
+        System.out.print(".");
+        for (int i = 1; i <= BOARD_SIZE; ++i)
+            System.out.print(" " + i);
+        System.out.println();
         System.out.println("curX, curY : " + (curX + 1) + " | " + (curY + 1));
     }
 
@@ -230,8 +234,8 @@ class TicTacToe {
                 if( t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE ) moveWeigth -= 30;
             }
 
-            if (n >= 4 && moveChar == COMP_CHAR) return 5000;
-            if (n >= 4 && moveChar == USER_CHAR) return 2000;
+            if (n >= WIN_COINT && moveChar == COMP_CHAR) return 5000;
+            if (n >= WIN_COINT && moveChar == USER_CHAR) return 2000;
 
             if (curWeigth < moveWeigth) curWeigth = moveWeigth;
 
