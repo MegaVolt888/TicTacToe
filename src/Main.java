@@ -106,12 +106,13 @@ class TicTacToe {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println("Enter X, Y");
-            curY = sc.nextInt() - 1;
             curX = sc.nextInt() - 1;
-            if (curX < 0 || curX >= BOARD_SIZE || curY < 0 || curY >= BOARD_SIZE || board[curX][curY] != EMPTY_CELL_CHAR)
+            curY = sc.nextInt() - 1;
+
+            if (curX < 0 || curX >= BOARD_SIZE || curY < 0 || curY >= BOARD_SIZE || board[curY][curX] != EMPTY_CELL_CHAR)
                 curX = -1;
         } while (curX == -1);
-        board[curX][curY] = USER_CHAR;
+        board[curY][curX] = USER_CHAR;
         userMoves++;
     }
 
@@ -214,6 +215,7 @@ class TicTacToe {
                 moveWeigth += 100;
                 t_x += vector[i][0];
                 t_y += vector[i][1];
+                if( t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE ) moveWeigth -= 30;
             }
 
             t_x = a;
@@ -225,14 +227,16 @@ class TicTacToe {
                 moveWeigth += 100;
                 t_x -= vector[i][0];
                 t_y -= vector[i][1];
+                if( t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE ) moveWeigth -= 30;
             }
 
-            if (n >= 4 && curWeigth == COMP_CHAR) return 5000;
-            if (n >= 4 && curWeigth == USER_CHAR) return 2000;
+            if (n >= 4 && moveChar == COMP_CHAR) return 5000;
+            if (n >= 4 && moveChar == USER_CHAR) return 2000;
+
             if (curWeigth < moveWeigth) curWeigth = moveWeigth;
 
         }
-
+        if( a == 0 || a == BOARD_SIZE - 1|| b == 0 || b == BOARD_SIZE - 1) curWeigth -= 50;
         return curWeigth;
     }
 }
