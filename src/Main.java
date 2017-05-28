@@ -1,11 +1,10 @@
-/**
- * Lesson 4. Student Vladimir Mushkin
- * Objects and tictactoe in object style
+/*
+  Tictactoe in object style
  */
 
 import java.util.Scanner;
 
-public class Main {
+class Main {
 
     public static void main(String[] args) {
 
@@ -19,8 +18,8 @@ public class Main {
 }
 
 
-/**
- * Lesson3. TickTackToe. Student - Vladimir Mushkin
+/*
+   TickTackToe.
  */
 
 
@@ -32,19 +31,22 @@ public class Main {
 
 class TicTacToe {
 
-    final int WIN_COINT = 4;
-    final int BOARD_SIZE = 9;
-    final char USER_CHAR = 'X';
-    final char COMP_CHAR = 'O';
-    final char EMPTY_CELL_CHAR = '.';
+    private final int WIN_COINT = 5;
+    private final int BOARD_SIZE = 9;
+    private final char USER_CHAR = 'X';
+    private final char COMP_CHAR = 'O';
+    private final char EMPTY_CELL_CHAR = '.';
+    private final char[][] board;
     /**
      * We assume the board is square, so we use only one dimension.
      */
 
 
-    int userMoves, compMoves, curX, curY, cellsCount;
-    char[][] board;
-    boolean gameOver;
+    private int userMoves;
+    private int compMoves;
+    private int curX;
+    private int curY;
+    private boolean gameOver;
 
 
     public TicTacToe() {
@@ -53,7 +55,6 @@ class TicTacToe {
         userMoves = 0;
         compMoves = 0;
         gameOver = false;
-        cellsCount = BOARD_SIZE * BOARD_SIZE;
         board = new char[BOARD_SIZE][BOARD_SIZE];
         initBoard();
         printBoard();
@@ -81,13 +82,13 @@ class TicTacToe {
 
     }
 
-    void initBoard() {
+    private void initBoard() {
         for (int i = 0; i < BOARD_SIZE; ++i)
             for (int j = 0; j < BOARD_SIZE; ++j)
                 board[i][j] = EMPTY_CELL_CHAR;
     }
 
-    void printBoard() {
+    private void printBoard() {
 
         System.out.print(".");
         for (int i = 1; i <= BOARD_SIZE; ++i)
@@ -106,7 +107,7 @@ class TicTacToe {
         System.out.println("curX, curY : " + (curX + 1) + " | " + (curY + 1));
     }
 
-    void userMove() {
+    private void userMove() {
         Scanner sc = new Scanner(System.in);
         do {
             System.out.println("Enter X, Y");
@@ -120,7 +121,7 @@ class TicTacToe {
         userMoves++;
     }
 
-    void compMove() {
+    private void compMove() {
         double maxMove, curMove;
         int maxX, maxY;
         maxMove = 0;
@@ -155,7 +156,7 @@ class TicTacToe {
         curX = maxX;
     }
 
-    int checkWin(char whoisChar) {
+    private int checkWin(char whoisChar) {
         if (userMoves + compMoves == BOARD_SIZE * BOARD_SIZE) {
             System.out.println("Withdraw");
             return 0;
@@ -163,7 +164,7 @@ class TicTacToe {
         int vector[][] = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
         int t_x, t_y;
         int n;
-        for (int i = 0; i < vector.length; ++i) {
+        for (int[] aVector : vector) {
             n = 1;
 
             t_x = curX;
@@ -171,8 +172,8 @@ class TicTacToe {
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (board[t_y][t_x] != whoisChar) break;
                 if (t_x != curX || t_y != curY) ++n;
-                t_x += vector[i][0];
-                t_y += vector[i][1];
+                t_x += aVector[0];
+                t_y += aVector[1];
             }
 
             t_x = curX;
@@ -181,8 +182,8 @@ class TicTacToe {
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (board[t_y][t_x] != whoisChar) break;
                 if (t_x != curX || t_y != curY) ++n;
-                t_x -= vector[i][0];
-                t_y -= vector[i][1];
+                t_x -= aVector[0];
+                t_y -= aVector[1];
             }
             if (n >= WIN_COINT) {
                 System.out.println("User " + whoisChar + " wins! ");
@@ -192,11 +193,7 @@ class TicTacToe {
         return -1;
     }
 
-    boolean checkFull() {
-        return userMoves + compMoves == BOARD_SIZE * BOARD_SIZE;
-    }
-
-    double moveWeigth(int a, int b, char moveChar) {
+    private double moveWeigth(int a, int b, char moveChar) {
         double moveWeigth, curWeigth = 0.0;
         int n;
         int t_x, t_y;
@@ -204,7 +201,7 @@ class TicTacToe {
 
         int vector[][] = {{0, 1}, {1, 0}, {1, 1}, {-1, 1}};
 
-        for (int i = 0; i < vector.length; ++i) {
+        for (int[] aVector : vector) {
             // Compare line finishing
             t_x = a;
             t_y = b;
@@ -214,24 +211,24 @@ class TicTacToe {
 
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (t_x != a || t_y != b)
-                    if (board[t_y][t_x] != moveChar ) break;
-                else ++n ;
+                    if (board[t_y][t_x] != moveChar) break;
+                    else ++n;
                 moveWeigth += 100;
-                t_x += vector[i][0];
-                t_y += vector[i][1];
-                if( t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE ) moveWeigth -= 30;
+                t_x += aVector[0];
+                t_y += aVector[1];
+                if (t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE) moveWeigth -= 30;
             }
 
             t_x = a;
             t_y = b;
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (t_x != a || t_y != b)
-                    if (board[t_y][t_x] != moveChar ) break;
-                    else ++n ;
+                    if (board[t_y][t_x] != moveChar) break;
+                    else ++n;
                 moveWeigth += 100;
-                t_x -= vector[i][0];
-                t_y -= vector[i][1];
-                if( t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE ) moveWeigth -= 30;
+                t_x -= aVector[0];
+                t_y -= aVector[1];
+                if (t_x < 0 || t_x == BOARD_SIZE || t_y < 0 || t_y == BOARD_SIZE) moveWeigth -= 30;
             }
 
             if (n >= WIN_COINT && moveChar == COMP_CHAR) return 5000;
