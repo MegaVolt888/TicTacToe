@@ -31,7 +31,7 @@ class Main {
 
 class TicTacToe {
 
-    private final int WIN_COINT = 5;
+    private final int WIN_COINT = 4;
     private final int BOARD_SIZE = 9;
     private final char USER_CHAR = 'X';
     private final char COMP_CHAR = 'O';
@@ -209,9 +209,14 @@ class TicTacToe {
             n = 1;
             moveWeigth = 0.0;
 
+            if( linelength(a, b, moveChar, aVector) < WIN_COINT ) continue ;
+
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (t_x != a || t_y != b)
-                    if (board[t_y][t_x] != moveChar) break;
+                    if (board[t_y][t_x] != moveChar) {
+                        if (board[t_y][t_x] != EMPTY_CELL_CHAR) moveWeigth -= 35;
+                        break;
+                    }
                     else ++n;
                 moveWeigth += 100;
                 t_x += aVector[0];
@@ -223,7 +228,10 @@ class TicTacToe {
             t_y = b;
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (t_x != a || t_y != b)
-                    if (board[t_y][t_x] != moveChar) break;
+                    if (board[t_y][t_x] != moveChar) {
+                        if (board[t_y][t_x] != EMPTY_CELL_CHAR) moveWeigth -= 35;
+                        break;
+                    }
                     else ++n;
                 moveWeigth += 100;
                 t_x -= aVector[0];
@@ -239,5 +247,38 @@ class TicTacToe {
         }
         if( a == 0 || a == BOARD_SIZE - 1|| b == 0 || b == BOARD_SIZE - 1) curWeigth -= 50;
         return curWeigth;
+    }
+
+    private int linelength(int a, int b, char moveChar, int[] aVector ){
+
+
+        int t_x = a;
+        int t_y = b;
+
+        int n = 1;
+
+
+        while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
+            if (t_x != a || t_y != b)
+                if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
+            if (t_x != a && t_y != b)     ++n;
+
+            t_x += aVector[0];
+            t_y += aVector[1];
+        }
+
+        t_x = a;
+        t_y = b;
+        while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
+            if (t_x != a || t_y != b)
+                if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
+            if (t_x != a && t_y != b)     ++n;
+
+            t_x -= aVector[0];
+            t_y -= aVector[1];
+
+        }
+
+        return n;
     }
 }
