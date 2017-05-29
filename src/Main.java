@@ -257,25 +257,18 @@ class TicTacToe {
 
         int n = 1;
 
+       for( int k = -1 ; k < 2 ; k+=2 ) {
 
-        while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-            if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
-            if (t_x != a || t_y != b)   ++n;
+           while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
+               if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
+               if (t_x != a || t_y != b) ++n;
 
-            t_x += aVector[0];
-            t_y += aVector[1];
-        }
+               t_x += aVector[0]*k;
+               t_y += aVector[1]*k;
+           }
 
-        t_x = a;
-        t_y = b;
-        while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-            if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
-            if (t_x != a || t_y != b)    ++n;
+       }
 
-            t_x -= aVector[0];
-            t_y -= aVector[1];
-
-        }
 
         return n;
     }
