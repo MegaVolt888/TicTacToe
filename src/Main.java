@@ -251,25 +251,23 @@ class TicTacToe {
 
     private int linelength(int a, int b, char moveChar, int[] aVector ){
 
+        int t_x;
+        int t_y;
 
-        int t_x = a;
-        int t_y = b;
 
         int n = 1;
 
        for( int k = -1 ; k < 2 ; k+=2 ) {
-
+           t_x = a;
+           t_y = b;
            while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
                if (t_x != a || t_y != b) ++n;
 
-               t_x += aVector[0]*k;
-               t_y += aVector[1]*k;
+               t_x += aVector[0] * k;
+               t_y += aVector[1] * k;
            }
-
        }
-
-
         return n;
     }
 }
