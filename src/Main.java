@@ -49,7 +49,7 @@ class TicTacToe {
     private boolean gameOver;
 
 
-    public TicTacToe() {
+    TicTacToe() {
 
         // Initialize count of moves;
         userMoves = 0;
@@ -61,7 +61,7 @@ class TicTacToe {
 
     }
 
-    public Boolean go() {
+    Boolean go() {
 
 
         userMove();
@@ -208,8 +208,8 @@ class TicTacToe {
 
             n = 1;
             moveWeigth = 0.0;
-
-            if( linelength(a, b, moveChar, aVector) < WIN_COINT ) continue ;
+            int ms = linelength(a, b, moveChar, aVector) ;
+            if( ms < WIN_COINT ) continue ;
 
             while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
                 if (t_x != a || t_y != b)
@@ -259,9 +259,8 @@ class TicTacToe {
 
 
         while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-            if (t_x != a || t_y != b)
-                if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
-            if (t_x != a && t_y != b)     ++n;
+            if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
+            if (t_x != a || t_y != b)   ++n;
 
             t_x += aVector[0];
             t_y += aVector[1];
@@ -270,9 +269,8 @@ class TicTacToe {
         t_x = a;
         t_y = b;
         while (t_x < BOARD_SIZE && t_x >= 0 && t_y < BOARD_SIZE && t_y >= 0) {
-            if (t_x != a || t_y != b)
-                if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
-            if (t_x != a && t_y != b)     ++n;
+            if (board[t_y][t_x] != moveChar && board[t_y][t_x] != EMPTY_CELL_CHAR) break;
+            if (t_x != a || t_y != b)    ++n;
 
             t_x -= aVector[0];
             t_y -= aVector[1];
